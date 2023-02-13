@@ -1,29 +1,76 @@
 defmodule Main do
   use Application
 
+  alias Lab2.Queue
+  alias Lab2.Print
+  alias Lab2.Transform
+  alias Lab2.Average
+  alias Lab2.Scheduler
+  alias Lab2.Semaphore
+  alias Lab2.DoublyLinkedList
+
   def start(_type, _args) do
-    # IO.puts(Lab1.is_prime?(4))
-    # IO.puts(Lab1.cylinder_area(3, 4))
-    # IO.inspect(Lab1.reverse([1, 2, 3]))
-    # IO.puts(Lab1.unique_sum([1, 1, 2, 2, 3]))
-    # IO.inspect(Lab1.extract_random_n([1, 2, 3, 4, 5, 6, 7, 2], 5))
-    # IO.inspect(Lab1.first_fibonacci_elements(5))
-    # IO.inspect(Lab1.translator(%{"Hello": "Hi"}, "Hello world"))
-    # IO.inspect(Lab1.smallest_number(0, 2, 3))
-    # IO.inspect(Lab1.rotate_left([1, 2, 4, 8, 4], 3))
-    # IO.inspect(Lab1.list_right_angle_triangles())
-    # IO.inspect(Lab1.remove_consecutive_duplicates([1, 2, 2, 2, 4, 8, 4]))
-    # IO.inspect(Lab1.encode("lorem", 3))
-    # IO.inspect(Lab1.decode("oruhp", 3))
-    # IO.inspect(Lab1.line_words(["Hello", "Alaska", "Dad", "Peace"]))
-    # IO.inspect(Lab1.letters_combinations("23"))
-    # IO.inspect(Lab1.group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
-    # IO.inspect(Lab1.common_prefix(["flower", "flow", "flight"]))
-    # IO.inspect(Lab1.common_prefix(["alpha"]))
-    # IO.inspect(Lab1.to_roman(13))
-    # IO.inspect(Lab1.factorize(13), charlists: :as_lists)
+    # {:ok, pid} = Print.start()
+    # Print.print(pid, "Hello world")
+    # Print.print(pid, "Hi")
+    # Print.print(pid, 2)
+
+    # {:ok, pid} = Transform.start()
+    # Transform.transform(pid, 2)
+    # Transform.transform(pid, "WAZZUP BRO")
+    # Transform.transform(pid, {:hi, "random text"})
+
+    # {:ok, pid} = Average.start(0)
+    # Average.increase(pid, 10)
+    # Average.increase(pid, 10)
+    # Average.increase(pid, 10)
+
+    # pid = Lab2.monitored_actor_spawn()
+
+    # Lab2.monitoring_actor_spawn(pid)
+    # Process.sleep(1)
+    # Lab2.monitored_actor_kill(pid)
+
+    # {:ok, pid} = Queue.start_link()
+    # IO.inspect Queue.pop(pid)
+    # IO.inspect Queue.push(pid, 23)
+    # IO.inspect Queue.pop(pid)
+
+    # {:ok, pid} = Scheduler.start()
+    # Scheduler.create_worker(pid, "hello world")
+    # Scheduler.create_worker(pid, "how are u")
+    # Scheduler.create_worker(pid, "nice")
+
+    # pid = Semaphore.create_semaphore(1)
+
+    # spawn(fn -> semaphore_example(pid) end)
+    # spawn(fn -> semaphore_example(pid) end)
+
+    {:ok, pid} = Semaphore.create_semaphore(1)
+
+    spawn(fn -> semaphore_example(pid) end)
+    spawn(fn -> semaphore_example(pid) end)
+    spawn(fn -> semaphore_example(pid) end)
+
+    # pid = DoublyLinkedList.create_dllist([3, 4, 5, 42])
+    # IO.inspect DoublyLinkedList.traverse(pid)
+    # IO.inspect DoublyLinkedList.inverse(pid)
+
+    # {:ok, pid} = DoublyLinkedList.create_dllist([3, 4, 5, 42])
+    # IO.inspect DoublyLinkedList.traverse(pid)
+    # IO.inspect DoublyLinkedList.inverse(pid)
+
+    Process.sleep(3000)
 
     children = []
     Supervisor.start_link(children, strategy: :one_for_one)
+  end
+
+  def semaphore_example(pid) do
+    Semaphore.acquire(pid)
+    IO.inspect("#{:erlang.pid_to_list(self())} acquired the semaphore")
+    Process.sleep(1000)
+    IO.inspect("#{:erlang.pid_to_list(self())} released the semaphore")
+    Semaphore.release(pid)
   end
 end
