@@ -21,6 +21,7 @@ defmodule Lab2.Scheduler do
 
   def handle_info({:EXIT, pid, :normal}, specs) do
     Process.alive?(pid)
+
     {:noreply, Map.delete(specs, pid)}
   end
 

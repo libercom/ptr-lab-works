@@ -1,76 +1,55 @@
 defmodule Main do
   use Application
 
-  alias Lab2.Queue
-  alias Lab2.Print
-  alias Lab2.Transform
-  alias Lab2.Average
-  alias Lab2.Scheduler
-  alias Lab2.Semaphore
-  alias Lab2.DoublyLinkedList
+  alias Lab3.SupervisedPool
+  alias Lab3.SupervisedWorker
+  alias Lab3.ProcessingLine
+  alias Lab3.MainSensorSupervisor
+  alias Lab3.Jules
 
   def start(_type, _args) do
-    # {:ok, pid} = Print.start()
-    # Print.print(pid, "Hello world")
-    # Print.print(pid, "Hi")
-    # Print.print(pid, 2)
+    # {:ok, pid} = SupervisedPool.start_link(4)
 
-    # {:ok, pid} = Transform.start()
-    # Transform.transform(pid, 2)
-    # Transform.transform(pid, "WAZZUP BRO")
-    # Transform.transform(pid, {:hi, "random text"})
+    # IO.inspect SupervisedPool.get_workers(pid)
+    # {pid1, pid2, pid3, pid4} = SupervisedPool.get_workers(pid)
 
-    # {:ok, pid} = Average.start(0)
-    # Average.increase(pid, 10)
-    # Average.increase(pid, 10)
-    # Average.increase(pid, 10)
+    # SupervisedWorker.echo(pid1, "Hi")
+    # SupervisedWorker.echo(pid2, "Hello")
+    # SupervisedWorker.echo(pid3, "Ma man")
+    # SupervisedWorker.echo(pid4, "Privet")
 
-    # pid = Lab2.monitored_actor_spawn()
+    # SupervisedWorker.kill(pid3)
+    # SupervisedWorker.kill(pid4)
+    # Process.sleep(10)
 
-    # Lab2.monitoring_actor_spawn(pid)
-    # Process.sleep(1)
-    # Lab2.monitored_actor_kill(pid)
+    # {pid1, pid2, pid3, pid4} = SupervisedPool.get_workers(pid)
 
-    # {:ok, pid} = Queue.start_link()
-    # IO.inspect Queue.pop(pid)
-    # IO.inspect Queue.push(pid, 23)
-    # IO.inspect Queue.pop(pid)
+    # SupervisedWorker.echo(pid3, "Wazzup")
+    # SupervisedWorker.echo(pid4, "Halo")
 
-    # {:ok, pid} = Scheduler.start()
-    # Scheduler.create_worker(pid, "hello world")
-    # Scheduler.create_worker(pid, "how are u")
-    # Scheduler.create_worker(pid, "nice")
+    # IO.inspect SupervisedPool.get_workers(pid)
 
-    # pid = Semaphore.create_semaphore(1)
+    # {:ok, pid} = ProcessingLine.start_link()
 
-    # spawn(fn -> semaphore_example(pid) end)
-    # spawn(fn -> semaphore_example(pid) end)
+    # {pid1, module} = ProcessingLine.get_next_worker(pid, 0)
 
-    {:ok, pid} = Semaphore.create_semaphore(1)
+    # module.process_message(pid1, "Hello my little monster")
 
-    spawn(fn -> semaphore_example(pid) end)
-    spawn(fn -> semaphore_example(pid) end)
-    spawn(fn -> semaphore_example(pid) end)
+    MainSensorSupervisor.start_link()
 
-    # pid = DoublyLinkedList.create_dllist([3, 4, 5, 42])
-    # IO.inspect DoublyLinkedList.traverse(pid)
-    # IO.inspect DoublyLinkedList.inverse(pid)
+    # Jules.start_link()
 
-    # {:ok, pid} = DoublyLinkedList.create_dllist([3, 4, 5, 42])
-    # IO.inspect DoublyLinkedList.traverse(pid)
-    # IO.inspect DoublyLinkedList.inverse(pid)
-
-    Process.sleep(3000)
+    Process.sleep(30000)
 
     children = []
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 
-  def semaphore_example(pid) do
-    Semaphore.acquire(pid)
-    IO.inspect("#{:erlang.pid_to_list(self())} acquired the semaphore")
-    Process.sleep(1000)
-    IO.inspect("#{:erlang.pid_to_list(self())} released the semaphore")
-    Semaphore.release(pid)
-  end
+  # def semaphore_example(pid) do
+  #   Semaphore.acquire(pid)
+  #   IO.inspect("#{:erlang.pid_to_list(self())} acquired the semaphore")
+  #   Process.sleep(1000)
+  #   IO.inspect("#{:erlang.pid_to_list(self())} released the semaphore")
+  #   Semaphore.release(pid)
+  # end
 end
