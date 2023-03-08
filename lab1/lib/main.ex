@@ -8,38 +8,47 @@ defmodule Main do
   alias Lab3.Jules
 
   def start(_type, _args) do
-    # {:ok, pid} = SupervisedPool.start_link(4)
+    # Lab4.get_quotes_headers_and_status()
 
-    # IO.inspect SupervisedPool.get_workers(pid)
-    # {pid1, pid2, pid3, pid4} = SupervisedPool.get_workers(pid)
+    # data = Lab4.extract_quotes()
+    # IO.inspect data
 
-    # SupervisedWorker.echo(pid1, "Hi")
-    # SupervisedWorker.echo(pid2, "Hello")
-    # SupervisedWorker.echo(pid3, "Ma man")
-    # SupervisedWorker.echo(pid4, "Privet")
+    # Lab4.persist_data(data)
 
-    # SupervisedWorker.kill(pid3)
-    # SupervisedWorker.kill(pid4)
-    # Process.sleep(10)
+    # {:ok, config} = File.read!("spotify_config.json") |> Poison.decode()
 
-    # {pid1, pid2, pid3, pid4} = SupervisedPool.get_workers(pid)
 
-    # SupervisedWorker.echo(pid3, "Wazzup")
-    # SupervisedWorker.echo(pid4, "Halo")
+    # pid = Lab4.spotify_actor_spawn()
 
-    # IO.inspect SupervisedPool.get_workers(pid)
+    # Lab4.spotify_authenticate(pid, self())
 
-    # {:ok, pid} = ProcessingLine.start_link()
+    # receive do
+    #   :ok -> :ok
+    # end
 
-    # {pid1, module} = ProcessingLine.get_next_worker(pid, 0)
+    # Lab4.spotify_get_songs(pid)
 
-    # module.process_message(pid1, "Hello my little monster")
+    # IO.inspect "Create a new playlist:"
+    # name = IO.gets("")
+    # description = IO.gets("")
 
-    MainSensorSupervisor.start_link()
+    # Lab4.spotify_create_playlist(pid, name, description)
 
-    # Jules.start_link()
+    # IO.inspect "Add a few songs:"
+    # song1 = IO.gets("")
+    # song2 = IO.gets("")
+    # song3 = IO.gets("")
 
-    Process.sleep(30000)
+    # Lab4.spotify_add_song(pid, song1)
+    # Lab4.spotify_add_song(pid, song2)
+    # Lab4.spotify_add_song(pid, song3)
+
+    # IO.inspect "Upload a image:"
+    # img = IO.gets("")
+
+    # Lab4.spotify_upload_image(pid, img)
+
+    # Process.sleep(30000)
 
     children = []
     Supervisor.start_link(children, strategy: :one_for_one)

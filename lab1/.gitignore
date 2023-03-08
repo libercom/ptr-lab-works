@@ -24,3 +24,5 @@ lab1-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+spotify_config.json
