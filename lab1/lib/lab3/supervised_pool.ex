@@ -11,7 +11,6 @@ defmodule Lab3.SupervisedPool do
 
   def start_link(workers_count) do
     Supervisor.start_link(__MODULE__, workers_count, name: __MODULE__)
-
   end
 
   def get_workers(pid) do

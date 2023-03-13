@@ -18,37 +18,38 @@ defmodule Main do
     # {:ok, config} = File.read!("spotify_config.json") |> Poison.decode()
 
 
-    # pid = Lab4.spotify_actor_spawn()
+    pid = Lab4.spotify_actor_spawn()
 
-    # Lab4.spotify_authenticate(pid, self())
+    Lab4.spotify_authenticate(pid, self())
 
-    # receive do
-    #   :ok -> :ok
-    # end
+    receive do
+      :ok -> :ok
+    end
 
-    # Lab4.spotify_get_songs(pid)
+    Lab4.spotify_get_songs(pid)
+    Process.sleep(100)
 
-    # IO.inspect "Create a new playlist:"
-    # name = IO.gets("")
-    # description = IO.gets("")
+    IO.inspect "Create a new playlist:"
+    name = IO.gets("")
+    description = IO.gets("")
 
-    # Lab4.spotify_create_playlist(pid, name, description)
+    Lab4.spotify_create_playlist(pid, name, description)
 
-    # IO.inspect "Add a few songs:"
-    # song1 = IO.gets("")
-    # song2 = IO.gets("")
-    # song3 = IO.gets("")
+    IO.inspect "Add a few songs:"
+    song1 = IO.gets("")
+    song2 = IO.gets("")
+    song3 = IO.gets("")
 
-    # Lab4.spotify_add_song(pid, song1)
-    # Lab4.spotify_add_song(pid, song2)
-    # Lab4.spotify_add_song(pid, song3)
+    Lab4.spotify_add_song(pid, song1)
+    Lab4.spotify_add_song(pid, song2)
+    Lab4.spotify_add_song(pid, song3)
 
-    # IO.inspect "Upload a image:"
-    # img = IO.gets("")
+    IO.inspect "Upload a image:"
+    img = IO.gets("")
 
-    # Lab4.spotify_upload_image(pid, img)
+    Lab4.spotify_upload_image(pid, img)
 
-    # Process.sleep(30000)
+    Process.sleep(30000)
 
     children = []
     Supervisor.start_link(children, strategy: :one_for_one)

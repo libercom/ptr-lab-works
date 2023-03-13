@@ -6,8 +6,7 @@ defmodule Lab2.Queue do
   end
 
   def start_link() do
-    {:ok, pid} = GenServer.start_link(__MODULE__, [])
-    pid
+    GenServer.start_link(__MODULE__, [])
   end
 
   def handle_call(:pop, _from, [head | tail]) do
