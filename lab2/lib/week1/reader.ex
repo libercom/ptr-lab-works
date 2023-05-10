@@ -1,6 +1,8 @@
 defmodule Week1.Reader do
   use GenServer
 
+  alias Week1.MessageStore
+
   def init(url) do
     {:ok, res} = HTTPoison.get(url, [], stream_to: self())
 
@@ -12,8 +14,8 @@ defmodule Week1.Reader do
   end
 
   def handle_info(%HTTPoison.AsyncChunk{:chunk => chunk}, url) do
+    # MessageStore.add_message(chunk)
     send(:load_balancer, {:print_tweet, chunk})
-    send(:analytics, {:handle_analytics, chunk})
 
     {:noreply, url}
   end
